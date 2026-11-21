@@ -1,0 +1,6 @@
+hidden,params,f32_bytes,int8_bytes,fits_sram_f32,fits_sram_int8,fits_psram_f32,fits_psram_int8,macs,peak_act_values,peak_act_f32_bytes
+"32,32",1281,5124,1281,True,True,True,True,1216,64,256
+"128,128",17409,69636,17409,True,True,True,True,17152,256,1024
+"256,256",67585,270340,67585,True,True,True,True,67072,512,2048
+"512,512",266241,1064964,266241,False,True,True,True,265216,1024,4096
+"2048,2048",4210689,16842756,4210689,False,False,False,True,4206592,4096,16384
