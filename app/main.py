@@ -39,15 +39,17 @@ class Reading(BaseModel):
     # (shown in brackets) so a real reading just outside it still gets an answer. NaN/inf are refused.
     #   battery_v   2.5..4.5 V   one Li-ion cell: ~2.5 V protection cut-off, 4.2-4.35 V full.   [3.35..4.2]
     #               Refuses the 0 V "no reading" glitch.
-    #   temp_c      -40..70 C    outdoor doorbell operating range (sun-heated case included).    [8..46]
+    #   temp_c      -40..60 C    the Li-ion cell's operating limits: below ~-40 / above ~60 C   [8..46]
+    #               the battery's protection stops it, so a running doorbell can't report it.
     #               Refuses -127 (sensor disconnected) and 85 (DS18B20 power-on reset value).
-    #   rings       0..500/day   can't be negative; 500 is far above any real doorbell's day.    [0..41]
+    #   rings       0..200/day   can't be negative; ~200 is a very busy day (Halloween), far    [0..41]
+    #               above our data's 41 so real busy days still get answers.
     #   wifi_rssi   -100..-10    RSSI is always negative; ~-20 is touching the router,          [-88..-45]
     #               below ~-100 the link drops. Refuses the 0 dBm "no reading" glitch.
     #   age_months  0..120       can't be negative; 10 years is beyond the product's life.      [0..36]
     battery_v: float = Field(ge=2.5, le=4.5, allow_inf_nan=False)
-    temp_c: float = Field(ge=-40, le=70, allow_inf_nan=False)
-    rings_per_day: float = Field(ge=0, le=500, allow_inf_nan=False)
+    temp_c: float = Field(ge=-40, le=60, allow_inf_nan=False)
+    rings_per_day: float = Field(ge=0, le=200, allow_inf_nan=False)
     wifi_rssi_dbm: float = Field(ge=-100, le=-10, allow_inf_nan=False)
     age_months: float = Field(ge=0, le=120, allow_inf_nan=False)
 
