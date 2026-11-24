@@ -4,7 +4,7 @@ train.py -- STARTER. Clean the data, fit baselines, train the network, save it f
     python train.py --team 7 --hidden 32,32
 Writes model/model.pt and model/config.json, which app/main.py loads.
 
-Look for TODO. The training loop is given; the decisions are yours.
+All tasks are complete; look for "DONE Mission N" to find each one.
 """
 import argparse
 import json
@@ -26,7 +26,7 @@ a = ap.parse_args()
 hidden = tuple(int(h) for h in a.hidden.split(","))
 
 df = pd.read_csv(f"data/team_{a.team:02d}_train.csv")
-# TODO Mission 1: find the sensor glitches (plot every column first!) and write a rule that
+# DONE Mission 1: find the sensor glitches (plot every column first!) and write a rule that
 # marks them. Say in your report how many you found and why each rule is safe.
 # Each glitch is a single sentinel value far outside anything a working sensor reports, so each
 # threshold sits in an empty gap and cannot remove a real reading:
@@ -50,7 +50,7 @@ idx = rng.permutation(len(df)); n_val = len(df) // 5
 val, tr = df.iloc[idx[:n_val]], df.iloc[idx[n_val:]]
 X, y = tr[FEATURES].to_numpy(np.float32), tr.days_left.to_numpy(np.float32)
 Xv, yv = val[FEATURES].to_numpy(np.float32), val.days_left.to_numpy(np.float32)
-# TODO Mission 2: normalisation. Why must mu and sd come from the TRAINING rows only?
+# DONE Mission 2: normalisation. Why must mu and sd come from the TRAINING rows only?
 # Because the validation rows stand in for unseen data: if their values shaped mu and sd, facts
 # about the "unseen" data would leak into training and the validation MAE would look too good.
 # The server applies these same saved mu and sd to every live reading.
@@ -61,7 +61,7 @@ else:
 
 mae = lambda p, t: float(np.mean(np.abs(p - t)))
 print(f"baseline (predict the mean): {mae(np.full_like(yv, y.mean()), yv):.2f} days")
-# TODO Mission 1: a straight-line model (linear regression) as the second baseline.
+# DONE Mission 1: a straight-line model (linear regression) as the second baseline.
 # Use np.linalg.lstsq on [X, 1]. Print its validation MAE the same way as the line above.
 # A column of ones lets the fit learn an intercept. Fit on training rows, score on validation rows.
 A = np.hstack([X, np.ones((len(X), 1), np.float32)])

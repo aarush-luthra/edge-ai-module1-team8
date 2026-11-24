@@ -1,5 +1,5 @@
 """
-app/main.py -- STARTER battery API. Look for TODO.
+app/main.py -- battery API. All tasks are complete; look for "DONE Mission N".
 
     uvicorn app.main:app --host 0.0.0.0 --port 8000
 
@@ -30,7 +30,7 @@ N_PARAMS = sum(p.numel() for p in net.parameters())
 
 
 class Reading(BaseModel):
-    # TODO Mission 3: a doorbell will send you glitches like the ones you found in Mission 1.
+    # DONE Mission 3: a doorbell will send you glitches like the ones you found in Mission 1.
     # Give every field a sensible range, e.g. Field(ge=..., le=...), so a glitch is refused
     # with HTTP 422 instead of being answered with a made-up number. Base the limits on what a
     # real sensor can report, not on your data's min and max: real readings must still get answers.
@@ -64,7 +64,7 @@ ms = lambda t0: round((time.perf_counter() - t0) * 1000, 3)
 
 @app.get("/model_info")
 def model_info():
-    # TODO Mission 2 + 4: return your per-layer table, worked out FROM THE NETWORK (net.net),
+    # DONE Mission 2 + 4: return your per-layer table, worked out FROM THE NETWORK (net.net),
     # not typed in by hand, so it stays right if you change the layer sizes. Exactly these keys:
     # {"layers": [{"name": "linear1", "in": 5, "out": 32, "params": ..., "bytes_f32": ..., "macs": ...}, ...],
     #  "total_params": ..., "total_bytes_f32": ..., "total_bytes_int8": ..., "total_macs": ...,
@@ -119,7 +119,7 @@ async def run(request: Request, schema):
                                                       "detail": json.loads(e.json(include_input=False))})
     t["parse"] = ms(t0)
     rows = data.rows if isinstance(data, Batch) else [data]
-    # TODO Mission 3: time each of the three stages below the same way "parse" is timed above,
+    # DONE Mission 3: time each of the three stages below the same way "parse" is timed above,
     # storing them as t["normalise"], t["inference"] and t["build"].
     t0 = time.perf_counter()
     x = (np.array([[getattr(r, f) for f in FEATURES] for r in rows], np.float32) - MU) / SD
